@@ -1,6 +1,5 @@
 package lambda_streams;
 
-import java.util.function.BinaryOperator;
 import java.util.stream.IntStream;
 
 public class IntStreamOperations {
@@ -40,7 +39,5 @@ public class IntStreamOperations {
 		System.out.printf("%nSum of integers from 1 to 9: %d%n", IntStream.range(1, 10).sum());
 		System.out.printf("Sum of integers from 1 to 10: %d%n", IntStream.rangeClosed(1, 10).sum());
 		
-		//System.out.printlf("", IntStream.of(values).);
-		//System.out.printlf("", IntStream.of(values).);
 	}
 }
