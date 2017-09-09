@@ -30,11 +30,15 @@ public class IntStreamOperations {
 			.sorted()
 			.forEach(value -> System.out.printf(" " + value));
 		
+		String a = "this string cannot be changed if used in lambdas|";
+		//uncomment and see the error
+		//a = "new value";
+		
 		System.out.printf("%nOdd values multiplied by 10 and displayed in sorted order: ");
 		IntStream.of(values).filter(value -> value%2 != 0)
 		.map( value -> value * 10)
 		.sorted()
-		.forEach(value -> System.out.printf(" "+value));
+		.forEach(value -> System.out.printf(" "+value+" "+a));
 		
 		System.out.printf("%nSum of integers from 1 to 9: %d%n", IntStream.range(1, 10).sum());
 		System.out.printf("Sum of integers from 1 to 10: %d%n", IntStream.rangeClosed(1, 10).sum());
