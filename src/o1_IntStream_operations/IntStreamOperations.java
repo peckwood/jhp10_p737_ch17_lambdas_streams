@@ -1,5 +1,6 @@
-package lambda_streams;
+package o1_IntStream_operations;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 public class IntStreamOperations {
