@@ -49,9 +49,87 @@ public class ProcessingEmployees
 				.sorted(Comparator.comparing(Employee::getSalary))
 				.findFirst()
 				.get());
-		
+
 		// Functions for getting first and last names from an Employee
-		
+		Function<Employee, String> getFirstName = Employee::getFirstName;
+		Function<Employee, String> getLastName = Employee::getLastName;
+		// Comparator for comparing Employees by first name then last name
+		Comparator<Employee> lastThenFirst = Comparator.comparing(getLastName).thenComparing(getFirstName);
+		System.out.printf(
+				"%nEmployees in ascending order by last name then first:%n");
+		// sort employees by last name, then first name 
+		list.stream()
+		.sorted(lastThenFirst)
+		.forEach(System.out::println);
+
+
+		// sort employees in descending order by last name, then first name
+		Comparator<Employee> firstThenLastDescen = Comparator.comparing(getLastName).thenComparing(getFirstName).reversed();
+		System.out.printf(
+				"%nEmployees in descending order by last name then first:%n");
+		list.stream()
+		.sorted(firstThenLastDescen)
+		.forEach(System.out::println);
+
+		// display unique employee last names sorted
+		System.out.printf("%nUnique employee last names:%n");
+		list.stream()
+		.map(Employee::getLastName)
+		.distinct()
+		.sorted()
+		.forEach(System.out::println);
+
+		// display only first and last names
+		System.out.printf(
+				"%nEmployee names in order by last name then first name:%n");
+		list.stream()
+		.sorted(lastThenFirst)
+		.map(Employee::getName)
+		.forEach(System.out::println);
+
+		// group Employees by department
+		System.out.printf("%nEmployees by department:%n"); 
+		Map<String, List<Employee>> groupedByDepartment =
+				list.stream()
+				.collect(Collectors.groupingBy(Employee::getDepartment));
+		groupedByDepartment.forEach(
+				(department, employeesInDepartement) ->
+				{
+					System.out.println(department);
+					employeesInDepartement.forEach(System.out::println);
+				}
+				);
+
+		// count number of Employees in each department
+		System.out.printf("%nCount of Employees by department:%n"); 
+		Map<String, Long> employeeCountByDepartment =
+				list.stream()
+				.collect(Collectors.groupingBy(Employee::getDepartment, 
+						TreeMap::new, Collectors.counting()));
+		employeeCountByDepartment.forEach(
+				(department, count) -> System.out.printf(
+						"%s has %d employee(s)%n", department, count));
+
+		// sum of Employee salaries with DoubleStream sum method
+		System.out.printf(
+				"%nSum of Employees' salaries (via sum method): %.2f%n",
+				list.stream()
+				.mapToDouble(Employee::getSalary)
+				.sum());
+
+		// calculate sum of Employee salaries with Stream reduce method
+		System.out.printf(
+				"Sum of Employees' salaries (via reduce method): %.2f%n",
+				list.stream()
+				.mapToDouble(Employee::getSalary)
+				.reduce(0, (value1, value2) -> value1 + value2));  
+
+		// average of Employee salaries with DoubleStream average method
+		System.out.printf("Average of Employees' salaries: %.2f%n",
+				list.stream()
+				.mapToDouble(Employee::getSalary)
+				.average()
+				.getAsDouble());      
 	} // end main
 } // end class ProcessingEmployees
 
